@@ -5,7 +5,7 @@ language: c
 before_install:
   - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
-  - sudo apt-get install -qq bats libedit-dev libedit2 openjdk-7-jdk openjdk-8-jdk maven
+  - sudo apt-get install -qq bats libedit-dev libedit2 openjdk-7-jdk openjdk-8-jdk oracle-jdk-9 maven
 
 before_script:
   - jdk_switcher use $JDK
@@ -17,8 +17,8 @@ compiler:
 env:
   - JDK=openjdk7
   - JDK=openjdk8
+  - JDK=oraclejdk9
 
 script:
   - make clean bats T_LIBS="JavaEditline JavaReadline JavaGetline" CC=$CC
   - mvn clean site install
-
