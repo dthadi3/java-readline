@@ -1,24 +1,22 @@
 sudo: required
-dist: trusty
-language: c
+dist: xenial
+language: java
 
 before_install:
-  - sudo add-apt-repository ppa:duggan/bats --yes
   - sudo apt-get update -qq
-  - sudo apt-get install -qq bats libedit-dev libedit2 openjdk-7-jdk openjdk-8-jdk maven
+  - sudo apt-get install -qq libedit-dev libedit2 bats
 
-before_script:
-  - jdk_switcher use $JDK
-
-compiler:
-  - clang
-  - gcc
+jdk:
+  - openjdk9
+  - openjdk10
+  - openjdk11
 
 env:
-  - JDK=openjdk7
-  - JDK=openjdk8
+  - CC=clang
+  - CC=gcc
 
 script:
-  - make clean bats T_LIBS="JavaEditline JavaReadline JavaGetline" CC=$CC
+  - echo "Running with LANG=$LANG, bats $(bats --version)"
   - mvn clean site install
+  - make clean bats T_LIBS="JavaEditline JavaReadline JavaGetline" BROKEN_EDITLINE_HISTORY=1 CC=$CC
 

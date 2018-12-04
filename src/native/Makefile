@@ -140,8 +140,6 @@ org_gnu_readline_Readline.$(OBJ_EXT): org_gnu_readline_Readline.h \
 																		 -c org_gnu_readline_Readline.c
 
 org_gnu_readline_Readline.h: $(BUILDDIR)/org/gnu/readline/Readline.class
-	$(JAVA_HOME)/bin/javah -classpath $(BUILDDIR) -jni org.gnu.readline.Readline
-	touch org_gnu_readline_Readline.h
 
 clean:
 	-rm -f org_gnu_readline_Readline.h \

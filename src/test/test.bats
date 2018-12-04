@@ -48,6 +48,10 @@ is_editline() {
   [ -f "$LIBJAVAEDITLINE" ]
 }
 
+is_editline_utf8_history_broken() {
+  [ "$BROKEN_EDITLINE_HISTORY" = "1" ]
+}
+
 has_iso8859_15() {
   locale -a | grep de_DE@euro > /dev/null 2>&1
 }
@@ -257,6 +261,10 @@ assert_completion() {
     skip "java-readline not built with Editline support"
   fi
 
+  if is_editline_utf8_history_broken ; then
+    skip "libedit history is broken for UTF-8 input on this host"
+  fi
+
   assert_history "Editline" "$(printf "%b" "Hello World\xc3\xa4")" "en_US.UTF-8" "UTF-8"
 }
 
@@ -303,6 +311,10 @@ assert_completion() {
 @test "Editline handles utf8 outside BMP history" {
   if ! is_editline ; then
     skip "java-readline not built with Editline support"
+  fi
+
+  if is_editline_utf8_history_broken ; then
+    skip "libedit history is broken for UTF-8 input on this host"
   fi
 
   assert_history "Editline" "$(printf "%b" "Hello World\xf0\x9f\x8c\x8b")" "en_US.UTF-8" "UTF-8"

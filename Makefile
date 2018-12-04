@@ -37,7 +37,7 @@ T_LIBS    = JavaReadline
 
 ## normal javac
 JAVAC = $(JAVA_HOME)/bin/javac
-JC_FLAGS += -target 1.5 -source 1.5
+JC_FLAGS += -target 1.8 -source 1.8
 
 # installation directories   --------------------------------------------------
 
